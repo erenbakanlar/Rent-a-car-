@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "vNXMtMvZECE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\erenb\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\erenb\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
