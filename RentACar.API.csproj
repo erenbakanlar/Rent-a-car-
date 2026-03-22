@@ -7,7 +7,35 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+  </ItemGroup>
+
+  <!-- Alt projelerin kaynak dosyalarını derlemeye dahil etme -->
+  <ItemGroup>
+    <Compile Remove="RentACar.Domain\**" />
+    <Compile Remove="RentACar.Application\**" />
+    <Compile Remove="RentACar.Infrastructure\**" />
+    <Compile Remove="RentACar.MVC\**" />
+    <EmbeddedResource Remove="RentACar.Domain\**" />
+    <EmbeddedResource Remove="RentACar.Application\**" />
+    <EmbeddedResource Remove="RentACar.Infrastructure\**" />
+    <EmbeddedResource Remove="RentACar.MVC\**" />
+    <None Remove="RentACar.Domain\**" />
+    <None Remove="RentACar.Application\**" />
+    <None Remove="RentACar.Infrastructure\**" />
+    <None Remove="RentACar.MVC\**" />
+    <Content Remove="RentACar.MVC\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="RentACar.Domain\RentACar.Domain.csproj" />
+    <ProjectReference Include="RentACar.Application\RentACar.Application.csproj" />
+    <ProjectReference Include="RentACar.Infrastructure\RentACar.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

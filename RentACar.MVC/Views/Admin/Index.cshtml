@@ -1,0 +1,119 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Dashboard</h4>
+        <p class="text-muted small mb-0">Sisteme genel bakış</p>
+    </div>
+    <span class="text-muted small">
+        <i class="bi bi-clock me-1"></i>@DateTime.Now.ToString("dd MMMM yyyy, HH:mm")
+    </span>
+</div>
+
+<!-- İstatistik Kartları -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card p-4">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted small mb-1">Toplam Araç</p>
+                    <h3 class="fw-bold mb-0" id="statTotalCars">@ViewBag.TotalCars</h3>
+                </div>
+                <div class="rounded-3 p-2" style="background:#eff6ff;">
+                    <i class="bi bi-car-front fs-4 text-primary"></i>
+                </div>
+            </div>
+            <p class="text-muted small mt-2 mb-0">
+                <span class="text-success fw-semibold">@ViewBag.AvailableCars müsait</span>
+                · @ViewBag.RentedCars kirada
+            </p>
+        </div>
+    </div>
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card p-4">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted small mb-1">Toplam Rezervasyon</p>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalBookings</h3>
+                </div>
+                <div class="rounded-3 p-2" style="background:#f0fdf4;">
+                    <i class="bi bi-calendar-check fs-4 text-success"></i>
+                </div>
+            </div>
+            <p class="text-muted small mt-2 mb-0">
+                <span class="text-warning fw-semibold">@ViewBag.PendingBookings beklemede</span>
+            </p>
+        </div>
+    </div>
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card p-4">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted small mb-1">Toplam Gelir</p>
+                    <h3 class="fw-bold mb-0">₺@(((decimal)ViewBag.TotalRevenue).ToString("N0"))</h3>
+                </div>
+                <div class="rounded-3 p-2" style="background:#fefce8;">
+                    <i class="bi bi-currency-dollar fs-4 text-warning"></i>
+                </div>
+            </div>
+            <p class="text-muted small mt-2 mb-0">İptal edilmeyenler dahil</p>
+        </div>
+    </div>
+    <div class="col-6 col-xl-3">
+        <div class="card stat-card p-4">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted small mb-1">Doluluk Oranı</p>
+                    @{
+                        var total = (int)ViewBag.TotalCars;
+                        var rented = (int)ViewBag.RentedCars;
+                        var rate = total > 0 ? (int)Math.Round((double)rented / total * 100) : 0;
+                    }
+                    <h3 class="fw-bold mb-0">%@rate</h3>
+                </div>
+                <div class="rounded-3 p-2" style="background:#fdf4ff;">
+                    <i class="bi bi-graph-up fs-4 text-purple" style="color:#9333ea;"></i>
+                </div>
+            </div>
+            <div class="progress mt-2" style="height:4px; border-radius:2px;">
+                <div class="progress-bar bg-purple" style="width:@rate%; background:#9333ea;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hızlı İşlemler -->
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card stat-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0"><i class="bi bi-car-front me-2 text-primary"></i>Araç Yönetimi</h6>
+                <a asp-action="Cars" class="btn btn-sm btn-outline-primary">Tümünü Gör</a>
+            </div>
+            <p class="text-muted small mb-3">Araç ekle, düzenle veya sil. Tüm işlemler AJAX ile anlık güncellenir.</p>
+            <div class="d-flex gap-2">
+                <a asp-action="Cars" class="btn btn-primary btn-sm">
+                    <i class="bi bi-list me-1"></i>Araçlar
+                </a>
+                <a asp-action="CreateCar" class="btn btn-success btn-sm">
+                    <i class="bi bi-plus-lg me-1"></i>Yeni Araç
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card stat-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0"><i class="bi bi-calendar-check me-2 text-success"></i>Rezervasyon Yönetimi</h6>
+                <a asp-action="Bookings" class="btn btn-sm btn-outline-success">Tümünü Gör</a>
+            </div>
+            <p class="text-muted small mb-3">Rezervasyonları görüntüle ve durumlarını AJAX ile güncelle.</p>
+            <a asp-action="Bookings" class="btn btn-success btn-sm">
+                <i class="bi bi-list me-1"></i>Rezervasyonlar
+            </a>
+        </div>
+    </div>
+</div>

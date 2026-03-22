@@ -1,0 +1,129 @@
+@{
+    ViewData["Title"] = "Yeni Araç Ekle";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex align-items-center gap-3 mb-4">
+    <a asp-action="Cars" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Geri
+    </a>
+    <div>
+        <h4 class="fw-bold mb-0">Yeni Araç Ekle</h4>
+        <p class="text-muted small mb-0">Sisteme yeni bir araç kaydı oluşturun</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card stat-card p-4">
+            <div id="formAlert"></div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">Marka <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="brand" placeholder="Toyota, BMW, Mercedes..." />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">Model <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="model" placeholder="Corolla, 3 Series..." />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">Üretim Yılı <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="year" min="2000" max="2025" value="2024" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">Günlük Fiyat (₺) <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text">₺</span>
+                        <input type="number" class="form-control" id="price" step="0.01" min="0" placeholder="500.00" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">Durum</label>
+                    <select class="form-select" id="status">
+                        <option value="0">Müsait</option>
+                        <option value="1">Kirada</option>
+                        <option value="2">Bakımda</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">Görsel URL <span class="text-muted">(opsiyonel)</span></label>
+                    <input type="url" class="form-control" id="imageUrl" placeholder="https://..." />
+                </div>
+                <div class="col-12" id="imagePreviewArea" style="display:none;">
+                    <img id="imagePreview" src="" alt="Önizleme"
+                         style="max-height:160px; border-radius:10px; object-fit:cover;" />
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <button type="button" class="btn btn-primary px-4" id="btnSave">
+                    <i class="bi bi-plus-lg me-2"></i>Araç Ekle
+                </button>
+                <a asp-action="Cars" class="btn btn-light px-4">İptal</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Görsel önizleme
+    $('#imageUrl').on('input', function () {
+        const url = $(this).val();
+        if (url) {
+            $('#imagePreview').attr('src', url);
+            $('#imagePreviewArea').show();
+        } else {
+            $('#imagePreviewArea').hide();
+        }
+    });
+
+    // Araç Ekle (AJAX)
+    $('#btnSave').on('click', function () {
+        const brand = $('#brand').val().trim();
+        const model = $('#model').val().trim();
+        const price = parseFloat($('#price').val());
+
+        if (!brand || !model || !price) {
+            showAlert('Marka, model ve fiyat zorunludur.', 'danger');
+            return;
+        }
+
+        const $btn = $(this).prop('disabled', true)
+            .html('<span class="spinner-border spinner-border-sm me-2"></span>Ekleniyor...');
+
+        $.ajax({
+            url: '/Admin/CreateCarAjax',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                brand,
+                model,
+                year: parseInt($('#year').val()),
+                pricePerDay: price,
+                status: parseInt($('#status').val()),
+                imageUrl: $('#imageUrl').val() || null
+            }),
+            success: function (res) {
+                if (res.success) {
+                    showAlert('Araç başarıyla eklendi! Araç listesine yönlendiriliyorsunuz...', 'success');
+                    setTimeout(() => window.location.href = '/Admin/Cars', 1500);
+                } else {
+                    showAlert(res.message, 'danger');
+                    $btn.prop('disabled', false).html('<i class="bi bi-plus-lg me-2"></i>Araç Ekle');
+                }
+            },
+            error: function () {
+                showAlert('Sunucu hatası oluştu.', 'danger');
+                $btn.prop('disabled', false).html('<i class="bi bi-plus-lg me-2"></i>Araç Ekle');
+            }
+        });
+    });
+
+    function showAlert(msg, type) {
+        $('#formAlert').html(`<div class="alert alert-${type} py-2 small">
+            <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${msg}
+        </div>`);
+    }
+</script>
+}

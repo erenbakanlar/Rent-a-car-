@@ -1,0 +1,336 @@
+@model List<RentACar.Application.DTOs.CarDto>
+@{
+    ViewData["Title"] = "Araç Yönetimi";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Araç Yönetimi</h4>
+        <p class="text-muted small mb-0">@Model.Count araç kayıtlı</p>
+    </div>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCarModal">
+        <i class="bi bi-plus-lg me-2"></i>Yeni Araç Ekle
+    </button>
+</div>
+
+<!-- Bildirim alanı -->
+<div id="alertArea"></div>
+
+<!-- Araç Tablosu -->
+<div class="card table-card">
+    <div class="card-body p-0">
+        <div class="p-3 border-bottom d-flex gap-2">
+            <input type="text" id="searchCar" class="form-control form-control-sm" placeholder="Marka veya model ara..." style="max-width:250px;" />
+            <select id="filterStatus" class="form-select form-select-sm" style="max-width:160px;">
+                <option value="">Tüm Durumlar</option>
+                <option value="Available">Müsait</option>
+                <option value="Rented">Kirada</option>
+                <option value="Maintenance">Bakımda</option>
+            </select>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-0" id="carsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Marka / Model</th>
+                        <th>Yıl</th>
+                        <th>Günlük Fiyat</th>
+                        <th>Durum</th>
+                        <th>Görsel</th>
+                        <th class="text-end">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody id="carsBody">
+                    @foreach (var car in Model)
+                    {
+                        <tr data-id="@car.Id" data-status="@car.Status" data-name="@car.Brand @car.Model">
+                            <td class="text-muted small">#@car.Id</td>
+                            <td>
+                                <div class="fw-semibold">@car.Brand</div>
+                                <div class="text-muted small">@car.Model</div>
+                            </td>
+                            <td>@car.Year</td>
+                            <td class="fw-semibold">₺@car.PricePerDay.ToString("N2")</td>
+                            <td>
+                                @{
+                                    var (cls, txt) = car.Status switch {
+                                        "Available"   => ("badge-available",   "Müsait"),
+                                        "Rented"      => ("badge-rented",      "Kirada"),
+                                        _             => ("badge-maintenance", "Bakımda")
+                                    };
+                                }
+                                <span class="badge @cls px-3 py-1 rounded-pill">@txt</span>
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(car.ImageUrl))
+                                {
+                                    <img src="@car.ImageUrl" alt="" style="width:48px;height:36px;object-fit:cover;border-radius:6px;" />
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">—</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-1 btn-edit"
+                                        data-id="@car.Id"
+                                        data-brand="@car.Brand"
+                                        data-model="@car.Model"
+                                        data-year="@car.Year"
+                                        data-price="@car.PricePerDay"
+                                        data-status="@((int)Enum.Parse(typeof(RentACar.Domain.Entities.CarStatus), car.Status))"
+                                        data-image="@car.ImageUrl">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger btn-delete" data-id="@car.Id">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Araç Ekle Modal -->
+<div class="modal fade" id="addCarModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius:16px;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Yeni Araç Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="addCarAlert"></div>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Marka</label>
+                        <input type="text" class="form-control" id="addBrand" placeholder="Toyota" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Model</label>
+                        <input type="text" class="form-control" id="addModel" placeholder="Corolla" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Yıl</label>
+                        <input type="number" class="form-control" id="addYear" min="2000" max="2025" value="2024" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Günlük Fiyat (₺)</label>
+                        <input type="number" class="form-control" id="addPrice" step="0.01" placeholder="500" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Durum</label>
+                        <select class="form-select" id="addStatus">
+                            <option value="0">Müsait</option>
+                            <option value="1">Kirada</option>
+                            <option value="2">Bakımda</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Görsel URL</label>
+                        <input type="text" class="form-control" id="addImage" placeholder="https://..." />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="btnAddCar">
+                    <i class="bi bi-plus-lg me-1"></i>Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Araç Düzenle Modal -->
+<div class="modal fade" id="editCarModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius:16px;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Araç Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="editCarAlert"></div>
+                <input type="hidden" id="editId" />
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Marka</label>
+                        <input type="text" class="form-control" id="editBrand" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Model</label>
+                        <input type="text" class="form-control" id="editModel" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Yıl</label>
+                        <input type="number" class="form-control" id="editYear" min="2000" max="2025" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Günlük Fiyat (₺)</label>
+                        <input type="number" class="form-control" id="editPrice" step="0.01" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Durum</label>
+                        <select class="form-select" id="editStatus">
+                            <option value="0">Müsait</option>
+                            <option value="1">Kirada</option>
+                            <option value="2">Bakımda</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold">Görsel URL</label>
+                        <input type="text" class="form-control" id="editImage" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="btnEditCar">
+                    <i class="bi bi-check-lg me-1"></i>Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // ── Yardımcı: bildirim göster ──────────────────────────────────────────
+    function showAlert(container, msg, type = 'success') {
+        $(container).html(`<div class="alert alert-${type} py-2 small alert-dismissible fade show">
+            <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${msg}
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"></button>
+        </div>`);
+    }
+
+    // ── Arama & Filtre ─────────────────────────────────────────────────────
+    function filterTable() {
+        const q = $('#searchCar').val().toLowerCase();
+        const s = $('#filterStatus').val();
+        $('#carsBody tr').each(function () {
+            const name = $(this).data('name').toLowerCase();
+            const status = $(this).data('status');
+            const matchQ = !q || name.includes(q);
+            const matchS = !s || status === s;
+            $(this).toggle(matchQ && matchS);
+        });
+    }
+    $('#searchCar, #filterStatus').on('input change', filterTable);
+
+    // ── Araç Ekle (AJAX) ───────────────────────────────────────────────────
+    $('#btnAddCar').on('click', function () {
+        const brand = $('#addBrand').val().trim();
+        const model = $('#addModel').val().trim();
+        if (!brand || !model) {
+            showAlert('#addCarAlert', 'Marka ve model zorunludur.', 'danger');
+            return;
+        }
+
+        const $btn = $(this).prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span>Ekleniyor...');
+
+        $.ajax({
+            url: '/Admin/CreateCarAjax',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                brand,
+                model,
+                year: parseInt($('#addYear').val()),
+                pricePerDay: parseFloat($('#addPrice').val()),
+                status: parseInt($('#addStatus').val()),
+                imageUrl: $('#addImage').val() || null
+            }),
+            success: function (res) {
+                if (res.success) {
+                    showAlert('#alertArea', res.message);
+                    bootstrap.Modal.getInstance(document.getElementById('addCarModal')).hide();
+                    setTimeout(() => location.reload(), 1200);
+                } else {
+                    showAlert('#addCarAlert', res.message, 'danger');
+                    $btn.prop('disabled', false).html('<i class="bi bi-plus-lg me-1"></i>Ekle');
+                }
+            },
+            error: function () {
+                showAlert('#addCarAlert', 'Sunucu hatası oluştu.', 'danger');
+                $btn.prop('disabled', false).html('<i class="bi bi-plus-lg me-1"></i>Ekle');
+            }
+        });
+    });
+
+    // ── Araç Düzenle Modal Aç ─────────────────────────────────────────────
+    $(document).on('click', '.btn-edit', function () {
+        $('#editId').val($(this).data('id'));
+        $('#editBrand').val($(this).data('brand'));
+        $('#editModel').val($(this).data('model'));
+        $('#editYear').val($(this).data('year'));
+        $('#editPrice').val($(this).data('price'));
+        $('#editStatus').val($(this).data('status'));
+        $('#editImage').val($(this).data('image') || '');
+        $('#editCarAlert').html('');
+        new bootstrap.Modal(document.getElementById('editCarModal')).show();
+    });
+
+    // ── Araç Güncelle (AJAX) ──────────────────────────────────────────────
+    $('#btnEditCar').on('click', function () {
+        const $btn = $(this).prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span>Kaydediliyor...');
+
+        $.ajax({
+            url: '/Admin/UpdateCarAjax',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                id: parseInt($('#editId').val()),
+                brand: $('#editBrand').val(),
+                model: $('#editModel').val(),
+                year: parseInt($('#editYear').val()),
+                pricePerDay: parseFloat($('#editPrice').val()),
+                status: parseInt($('#editStatus').val()),
+                imageUrl: $('#editImage').val() || null
+            }),
+            success: function (res) {
+                if (res.success) {
+                    showAlert('#alertArea', res.message);
+                    bootstrap.Modal.getInstance(document.getElementById('editCarModal')).hide();
+                    setTimeout(() => location.reload(), 1200);
+                } else {
+                    showAlert('#editCarAlert', res.message, 'danger');
+                    $btn.prop('disabled', false).html('<i class="bi bi-check-lg me-1"></i>Kaydet');
+                }
+            },
+            error: function () {
+                showAlert('#editCarAlert', 'Sunucu hatası.', 'danger');
+                $btn.prop('disabled', false).html('<i class="bi bi-check-lg me-1"></i>Kaydet');
+            }
+        });
+    });
+
+    // ── Araç Sil (AJAX) ───────────────────────────────────────────────────
+    $(document).on('click', '.btn-delete', function () {
+        if (!confirm('Bu aracı silmek istediğinize emin misiniz?')) return;
+
+        const id = $(this).data('id');
+        const $row = $(this).closest('tr');
+
+        $.ajax({
+            url: '/Admin/DeleteCarAjax',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ id }),
+            success: function (res) {
+                if (res.success) {
+                    $row.fadeOut(300, function () { $(this).remove(); });
+                    showAlert('#alertArea', 'Araç başarıyla silindi.');
+                } else {
+                    showAlert('#alertArea', res.message, 'danger');
+                }
+            }
+        });
+    });
+</script>
+}

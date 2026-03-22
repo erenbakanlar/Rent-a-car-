@@ -1,0 +1,317 @@
+﻿@model List<RentACar.Application.DTOs.CarDto>
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    var isLoggedIn = !string.IsNullOrEmpty(Context.Session.GetString("JwtToken"));
+}
+
+<!-- Hero -->
+<section class="hero-section text-white py-5">
+    <div class="container py-4 position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <span class="badge bg-primary bg-opacity-25 text-info mb-3 px-3 py-2">
+                    <i class="bi bi-star-fill me-1"></i>Türkiye'nin Güvenilir Kiralama Platformu
+                </span>
+                <h1 class="display-4 fw-bold mb-3 lh-sm">
+                    Hayalinizdeki Araçla<br><span style="color:#60a5fa">Yola Çıkın</span>
+                </h1>
+                <p class="lead text-white-50 mb-4">
+                    Yüzlerce araç seçeneği, anlık rezervasyon ve güvenli ödeme ile araç kiralama artık çok kolay.
+                </p>
+                @if (!isLoggedIn)
+                {
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-person-plus me-2"></i>Ücretsiz Kayıt Ol
+                        </a>
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg px-4">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <a href="#cars" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-search me-2"></i>Araçlara Göz At
+                    </a>
+                }
+            </div>
+            <div class="col-lg-6 d-none d-lg-flex justify-content-end">
+                <i class="bi bi-car-front-fill" style="font-size:10rem; color:rgba(255,255,255,.07)"></i>
+            </div>
+        </div>
+
+        <!-- İstatistikler -->
+        <div class="row g-3 mt-4">
+            <div class="col-6 col-md-3">
+                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
+                    <div class="fw-bold fs-4">@Model.Count+</div>
+                    <div class="text-white-50 small">Müsait Araç</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
+                    <div class="fw-bold fs-4">7/24</div>
+                    <div class="text-white-50 small">Destek</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
+                    <div class="fw-bold fs-4">%100</div>
+                    <div class="text-white-50 small">Güvenli Ödeme</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
+                    <div class="fw-bold fs-4">Anında</div>
+                    <div class="text-white-50 small">Onay</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Araç Listesi -->
+<section class="py-5" id="cars">
+    <div class="container">
+
+        <!-- Başlık + Filtre -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+            <div>
+                <h2 class="fw-bold mb-1">Müsait Araçlar</h2>
+                <p class="text-muted mb-0">@Model.Count araç listeleniyor</p>
+            </div>
+            <div class="d-flex gap-2">
+                <input type="text" id="searchInput" class="form-control" placeholder="Marka veya model ara..." style="width:220px" />
+                <select id="sortSelect" class="form-select" style="width:160px">
+                    <option value="">Sırala</option>
+                    <option value="price-asc">Fiyat: Düşük → Yüksek</option>
+                    <option value="price-desc">Fiyat: Yüksek → Düşük</option>
+                    <option value="year-desc">Yıl: Yeni → Eski</option>
+                </select>
+            </div>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-car-front text-muted" style="font-size:4rem"></i>
+                <h5 class="mt-3 text-muted">Şu an müsait araç bulunmamaktadır.</h5>
+            </div>
+        }
+        else
+        {
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="carGrid">
+                @foreach (var car in Model)
+                {
+                    <div class="col car-item"
+                         data-name="@car.Brand @car.Model"
+                         data-price="@car.PricePerDay"
+                         data-year="@car.Year">
+                        <div class="card car-card h-100">
+                            @if (!string.IsNullOrEmpty(car.ImageUrl))
+                            {
+                                <img src="@car.ImageUrl" class="card-img-top"
+                                     alt="@car.Brand @car.Model"
+                                     style="height:210px; object-fit:cover;"
+                                     onerror="this.parentElement.querySelector('.card-img-placeholder').style.display='flex'; this.style.display='none';" />
+                            }
+                            <div class="card-img-placeholder @(string.IsNullOrEmpty(car.ImageUrl) ? "" : "d-none")">
+                                <i class="bi bi-car-front text-white-50" style="font-size:4rem"></i>
+                            </div>
+
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold mb-0">@car.Brand @car.Model</h5>
+                                    <span class="badge badge-available rounded-pill">Müsait</span>
+                                </div>
+                                <p class="text-muted small mb-3">
+                                    <i class="bi bi-calendar3 me-1"></i>@car.Year model
+                                </p>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <span class="fs-4 fw-bold text-primary">₺@car.PricePerDay.ToString("N0")</span>
+                                    <span class="text-muted small">/ gün</span>
+                                </div>
+                            </div>
+
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                @if (isLoggedIn)
+                                {
+                                    <button class="btn btn-primary w-100 btn-reserve"
+                                            data-car-id="@car.Id"
+                                            data-car-name="@car.Brand @car.Model"
+                                            data-price="@car.PricePerDay">
+                                        <i class="bi bi-calendar-check me-2"></i>Rezervasyon Yap
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Account" asp-action="Login"
+                                       class="btn btn-outline-primary w-100">
+                                        <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yaparak Kirala
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div id="noResults" class="text-center py-5 d-none">
+                <i class="bi bi-search text-muted" style="font-size:3rem"></i>
+                <p class="mt-3 text-muted">Arama kriterlerine uygun araç bulunamadı.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Rezervasyon Modal -->
+<div class="modal fade" id="reservationModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius:20px; overflow:hidden;">
+            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                <div>
+                    <h5 class="modal-title fw-bold">Rezervasyon Yap</h5>
+                    <p class="text-muted small mb-0" id="modalCarName"></p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body px-4 py-3">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="form-label fw-semibold small">Başlangıç Tarihi</label>
+                        <input type="date" class="form-control" id="startDate" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label fw-semibold small">Bitiş Tarihi</label>
+                        <input type="date" class="form-control" id="endDate" />
+                    </div>
+                </div>
+
+                <div id="pricePreview" class="mt-3 p-3 d-none"
+                     style="background:#f0f9ff; border-radius:12px; border:1px solid #bae6fd;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted small">Toplam Tutar</span>
+                        <span class="fw-bold fs-5 text-primary" id="totalPrice"></span>
+                    </div>
+                    <div class="text-muted small mt-1" id="dayCount"></div>
+                </div>
+
+                <div id="reservationResult" class="mt-3"></div>
+            </div>
+            <div class="modal-footer border-0 px-4 pb-4 pt-0">
+                <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary px-4" id="confirmReservation">
+                    <i class="bi bi-check-lg me-1"></i>Onayla
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    const API_BASE = '@(Context.Session.GetString("ApiBaseUrl") ?? "https://localhost:7001")';
+    const JWT_TOKEN = '@Context.Session.GetString("JwtToken")';
+    let selectedCarId = 0, pricePerDay = 0;
+
+    // Rezervasyon modal aç
+    $(document).on('click', '.btn-reserve', function () {
+        selectedCarId = $(this).data('car-id');
+        pricePerDay = parseFloat($(this).data('price'));
+        $('#modalCarName').text($(this).data('car-name') + ' · ₺' + pricePerDay.toLocaleString('tr-TR') + '/gün');
+        $('#reservationResult').html('');
+        $('#pricePreview').addClass('d-none');
+        $('#confirmReservation').prop('disabled', false);
+
+        const today = new Date().toISOString().split('T')[0];
+        const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+        $('#startDate').val(today).attr('min', today);
+        $('#endDate').val(tomorrow).attr('min', tomorrow);
+        calcPrice();
+
+        new bootstrap.Modal(document.getElementById('reservationModal')).show();
+    });
+
+    // Fiyat hesapla
+    function calcPrice() {
+        const start = new Date($('#startDate').val());
+        const end = new Date($('#endDate').val());
+        if (start && end && end > start) {
+            const days = Math.ceil((end - start) / 86400000);
+            const total = (days * pricePerDay).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+            $('#totalPrice').text('₺' + total);
+            $('#dayCount').text(days + ' gün × ₺' + pricePerDay.toLocaleString('tr-TR') + '/gün');
+            $('#pricePreview').removeClass('d-none');
+        } else {
+            $('#pricePreview').addClass('d-none');
+        }
+    }
+
+    $('#startDate, #endDate').on('change', calcPrice);
+
+    // Rezervasyon gönder
+    $('#confirmReservation').on('click', function () {
+        const startDate = $('#startDate').val();
+        const endDate = $('#endDate').val();
+
+        if (!startDate || !endDate || new Date(endDate) <= new Date(startDate)) {
+            $('#reservationResult').html('<div class="alert alert-warning py-2 small">Lütfen geçerli tarihler seçin.</div>');
+            return;
+        }
+
+        const $btn = $(this).prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Gönderiliyor...');
+
+        $.ajax({
+            url: API_BASE + '/api/bookings',
+            method: 'POST',
+            contentType: 'application/json',
+            headers: { 'Authorization': 'Bearer ' + JWT_TOKEN },
+            data: JSON.stringify({ carId: selectedCarId, startDate, endDate }),
+            success: function () {
+                $('#reservationResult').html(
+                    '<div class="alert alert-success py-2 small mb-0"><i class="bi bi-check-circle me-2"></i>Rezervasyon başarıyla oluşturuldu!</div>'
+                );
+                setTimeout(() => { bootstrap.Modal.getInstance(document.getElementById('reservationModal')).hide(); location.reload(); }, 2000);
+            },
+            error: function (xhr) {
+                const msg = xhr.responseJSON?.message || 'Bir hata oluştu.';
+                $('#reservationResult').html('<div class="alert alert-danger py-2 small mb-0"><i class="bi bi-exclamation-circle me-2"></i>' + msg + '</div>');
+                $btn.prop('disabled', false).html('<i class="bi bi-check-lg me-1"></i>Onayla');
+            }
+        });
+    });
+
+    // Arama filtresi
+    $('#searchInput').on('input', filterCars);
+    $('#sortSelect').on('change', filterCars);
+
+    function filterCars() {
+        const q = $('#searchInput').val().toLowerCase();
+        const sort = $('#sortSelect').val();
+        let items = $('.car-item').toArray();
+
+        // Filtrele
+        items.forEach(el => {
+            const name = $(el).data('name').toLowerCase();
+            $(el).toggle(name.includes(q));
+        });
+
+        // Sırala
+        if (sort) {
+            const visible = items.filter(el => $(el).is(':visible'));
+            visible.sort((a, b) => {
+                if (sort === 'price-asc') return $(a).data('price') - $(b).data('price');
+                if (sort === 'price-desc') return $(b).data('price') - $(a).data('price');
+                if (sort === 'year-desc') return $(b).data('year') - $(a).data('year');
+                return 0;
+            });
+            const grid = $('#carGrid');
+            visible.forEach(el => grid.append(el));
+        }
+
+        const visibleCount = $('.car-item:visible').length;
+        $('#noResults').toggleClass('d-none', visibleCount > 0);
+    }
+</script>
+}

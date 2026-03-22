@@ -1,0 +1,169 @@
+@model List<RentACar.Application.DTOs.BookingDto>
+@{
+    ViewData["Title"] = "Rezervasyon Yönetimi";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Rezervasyon Yönetimi</h4>
+        <p class="text-muted small mb-0">@Model.Count rezervasyon kayıtlı</p>
+    </div>
+</div>
+
+<div id="alertArea"></div>
+
+<div class="card table-card">
+    <div class="card-body p-0">
+        <div class="p-3 border-bottom d-flex gap-2 flex-wrap">
+            <input type="text" id="searchBooking" class="form-control form-control-sm"
+                   placeholder="Araç adı ara..." style="max-width:220px;" />
+            <select id="filterBookingStatus" class="form-select form-select-sm" style="max-width:160px;">
+                <option value="">Tüm Durumlar</option>
+                <option value="Pending">Beklemede</option>
+                <option value="Confirmed">Onaylandı</option>
+                <option value="Completed">Tamamlandı</option>
+                <option value="Cancelled">İptal</option>
+            </select>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Araç</th>
+                        <th>Kullanıcı</th>
+                        <th>Başlangıç</th>
+                        <th>Bitiş</th>
+                        <th>Gün</th>
+                        <th>Toplam</th>
+                        <th>Durum</th>
+                        <th class="text-end">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="bookingsBody">
+                    @foreach (var b in Model.OrderByDescending(x => x.Id))
+                    {
+                        var (cls, txt) = b.Status switch {
+                            "Pending"   => ("badge-pending",   "Beklemede"),
+                            "Confirmed" => ("badge-confirmed", "Onaylandı"),
+                            "Cancelled" => ("badge-cancelled", "İptal"),
+                            "Completed" => ("badge-completed", "Tamamlandı"),
+                            _           => ("bg-secondary",    b.Status)
+                        };
+                        var days = (b.EndDate - b.StartDate).Days;
+                        <tr data-id="@b.Id" data-status="@b.Status" data-car="@b.CarBrand @b.CarModel">
+                            <td class="text-muted small">#@b.Id</td>
+                            <td>
+                                <div class="fw-semibold small">@b.CarBrand @b.CarModel</div>
+                            </td>
+                            <td>
+                                <span class="text-muted small" title="@b.UserId">
+                                    @(b.UserId.Length > 8 ? b.UserId[..8] + "…" : b.UserId)
+                                </span>
+                            </td>
+                            <td class="small">@b.StartDate.ToString("dd.MM.yyyy")</td>
+                            <td class="small">@b.EndDate.ToString("dd.MM.yyyy")</td>
+                            <td class="small text-muted">@days gün</td>
+                            <td class="fw-semibold small">₺@b.TotalPrice.ToString("N2")</td>
+                            <td>
+                                <span class="badge @cls px-2 py-1 rounded-pill status-badge">@txt</span>
+                            </td>
+                            <td class="text-end">
+                                @if (b.Status == "Pending")
+                                {
+                                    <button class="btn btn-xs btn-success me-1 btn-status"
+                                            data-id="@b.Id" data-status="1" title="Onayla"
+                                            style="padding:3px 8px; font-size:.75rem; border-radius:6px;">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                    <button class="btn btn-xs btn-danger btn-status"
+                                            data-id="@b.Id" data-status="2" title="İptal Et"
+                                            style="padding:3px 8px; font-size:.75rem; border-radius:6px;">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                }
+                                @if (b.Status == "Confirmed")
+                                {
+                                    <button class="btn btn-xs btn-secondary btn-status"
+                                            data-id="@b.Id" data-status="3" title="Tamamlandı İşaretle"
+                                            style="padding:3px 8px; font-size:.75rem; border-radius:6px;">
+                                        <i class="bi bi-flag"></i>
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // ── Arama & Filtre ─────────────────────────────────────────────────────
+    function filterBookings() {
+        const q = $('#searchBooking').val().toLowerCase();
+        const s = $('#filterBookingStatus').val();
+        $('#bookingsBody tr').each(function () {
+            const car = $(this).data('car').toLowerCase();
+            const status = $(this).data('status');
+            $(this).toggle((!q || car.includes(q)) && (!s || status === s));
+        });
+    }
+    $('#searchBooking, #filterBookingStatus').on('input change', filterBookings);
+
+    // ── Durum Güncelle (AJAX) ─────────────────────────────────────────────
+    const statusMap = {
+        1: { cls: 'badge-confirmed', txt: 'Onaylandı' },
+        2: { cls: 'badge-cancelled', txt: 'İptal' },
+        3: { cls: 'badge-completed', txt: 'Tamamlandı' }
+    };
+
+    $(document).on('click', '.btn-status', function () {
+        const id = $(this).data('id');
+        const status = $(this).data('status');
+        const $row = $(this).closest('tr');
+        const $btn = $(this).prop('disabled', true);
+
+        $.ajax({
+            url: '/Admin/UpdateBookingStatusAjax',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ id, status }),
+            success: function (res) {
+                if (res.success) {
+                    const info = statusMap[status];
+                    // Badge güncelle
+                    $row.find('.status-badge')
+                        .removeClass()
+                        .addClass('badge status-badge px-2 py-1 rounded-pill ' + info.cls)
+                        .text(info.txt);
+                    // Aksiyon butonlarını kaldır
+                    $row.find('.btn-status').remove();
+                    $row.data('status', Object.keys({1:'Confirmed',2:'Cancelled',3:'Completed'})[status-1]);
+
+                    // Tamamlandı ise araç tekrar müsait olur - bilgi ver
+                    showAlert('#alertArea', 'Rezervasyon durumu güncellendi.');
+                } else {
+                    showAlert('#alertArea', res.message || 'Güncelleme başarısız.', 'danger');
+                    $btn.prop('disabled', false);
+                }
+            },
+            error: function () {
+                showAlert('#alertArea', 'Sunucu hatası.', 'danger');
+                $btn.prop('disabled', false);
+            }
+        });
+    });
+
+    function showAlert(container, msg, type = 'success') {
+        $(container).html(`<div class="alert alert-${type} py-2 small alert-dismissible fade show">
+            <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${msg}
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"></button>
+        </div>`);
+        setTimeout(() => $(container + ' .alert').alert('close'), 3000);
+    }
+</script>
+}
