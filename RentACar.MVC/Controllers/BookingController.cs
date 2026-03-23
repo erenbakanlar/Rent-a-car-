@@ -49,6 +49,26 @@ public class BookingController : Controller
     }
 
     /// <summary>
+    /// Rezervasyon oluştur (AJAX - Index sayfasından)
+    /// </summary>
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateBookingDto dto)
+    {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("JwtToken")))
+            return Json(new { success = false, message = "Oturum açmanız gerekiyor." });
+
+        var client = GetAuthClient();
+        var content = new StringContent(JsonSerializer.Serialize(dto), Encoding.UTF8, "application/json");
+        var response = await client.PostAsync("/api/bookings", content);
+
+        if (response.IsSuccessStatusCode)
+            return Json(new { success = true, message = "Rezervasyonunuz başarıyla oluşturuldu!" });
+
+        var error = await response.Content.ReadAsStringAsync();
+        return Json(new { success = false, message = "Rezervasyon oluşturulamadı." });
+    }
+
+    /// <summary>
     /// Rezervasyon iptal et (AJAX)
     /// </summary>
     [HttpPost]

@@ -6,20 +6,32 @@ namespace RentACar.Domain.Entities;
 public class Car
 {
     public int Id { get; set; }
-    public string Brand { get; set; } = string.Empty;   // Marka (Toyota, BMW vb.)
-    public string Model { get; set; } = string.Empty;   // Model (Corolla, 3 Series vb.)
-    public int Year { get; set; }                        // Üretim yılı
-    public decimal PricePerDay { get; set; }             // Günlük kiralama ücreti
+    public string Brand { get; set; } = string.Empty;
+    public string Model { get; set; } = string.Empty;
+    public int Year { get; set; }
+    public decimal PricePerDay { get; set; }
     public CarStatus Status { get; set; } = CarStatus.Available;
-    public string? ImageUrl { get; set; }                // Araç görseli URL'i
+    public CarCategory Category { get; set; } = CarCategory.Economy;
+    public string? ImageUrl { get; set; }
+    public int Seats { get; set; } = 5;
+    public string? FuelType { get; set; }   // Benzin, Dizel, Elektrik, Hibrit
+    public string? Transmission { get; set; } // Manuel, Otomatik
 
-    // Navigation property
     public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 }
 
 public enum CarStatus
 {
-    Available = 0,   // Müsait
-    Rented = 1,      // Kirada
-    Maintenance = 2  // Bakımda
+    Available = 0,
+    Rented = 1,
+    Maintenance = 2
+}
+
+public enum CarCategory
+{
+    Economy = 0,    // Ekonomi
+    Compact = 1,    // Kompakt
+    SUV = 2,        // SUV
+    Premium = 3,    // Premium
+    Van = 4         // Van / Minivan
 }

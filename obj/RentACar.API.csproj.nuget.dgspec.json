@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.API.csproj": {}
+    "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.API.csproj": {
+    "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.API.csproj",
+        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.API.csproj",
         "projectName": "RentACar.API",
-        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.API.csproj",
+        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.API.csproj",
         "packagesPath": "C:\\Users\\erenb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\obj\\",
+        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,14 +32,14 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\RentACar.Application.csproj": {
-                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\RentACar.Application.csproj"
+              "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\RentACar.Application.csproj": {
+                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\RentACar.Application.csproj"
               },
-              "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj": {
-                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj"
+              "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj": {
+                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj"
               },
-              "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj"
+              "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj"
               }
             }
           }
@@ -512,14 +512,14 @@
         }
       }
     },
-    "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\RentACar.Application.csproj": {
+    "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\RentACar.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\RentACar.Application.csproj",
+        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\RentACar.Application.csproj",
         "projectName": "RentACar.Application",
-        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\RentACar.Application.csproj",
+        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\RentACar.Application.csproj",
         "packagesPath": "C:\\Users\\erenb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\obj\\",
+        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -540,8 +540,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj": {
-                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj"
+              "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj": {
+                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj"
               }
             }
           }
@@ -855,14 +855,14 @@
         }
       }
     },
-    "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj": {
+    "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj",
         "projectName": "RentACar.Domain",
-        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj",
+        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj",
         "packagesPath": "C:\\Users\\erenb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\obj\\",
+        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1194,14 +1194,14 @@
         }
       }
     },
-    "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj": {
+    "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj",
         "projectName": "RentACar.Infrastructure",
-        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Infrastructure\\RentACar.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\erenb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1222,11 +1222,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\RentACar.Application.csproj": {
-                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Application\\RentACar.Application.csproj"
+              "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\RentACar.Application.csproj": {
+                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Application\\RentACar.Application.csproj"
               },
-              "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj": {
-                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\rent a car apı\\RentACar.API\\RentACar.Domain\\RentACar.Domain.csproj"
+              "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj": {
+                "projectPath": "C:\\Users\\erenb\\OneDrive\\Desktop\\Rent-a-car-\\RentACar.Domain\\RentACar.Domain.csproj"
               }
             }
           }

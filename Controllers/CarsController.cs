@@ -63,7 +63,11 @@ public class CarsController : ControllerBase
             Year = dto.Year,
             PricePerDay = dto.PricePerDay,
             Status = dto.Status,
-            ImageUrl = dto.ImageUrl
+            Category = dto.Category,
+            ImageUrl = dto.ImageUrl,
+            Seats = dto.Seats,
+            FuelType = dto.FuelType,
+            Transmission = dto.Transmission
         };
 
         var created = await _carRepository.AddAsync(car);
@@ -87,7 +91,11 @@ public class CarsController : ControllerBase
         car.Year = dto.Year;
         car.PricePerDay = dto.PricePerDay;
         car.Status = dto.Status;
+        car.Category = dto.Category;
         car.ImageUrl = dto.ImageUrl;
+        car.Seats = dto.Seats;
+        car.FuelType = dto.FuelType;
+        car.Transmission = dto.Transmission;
 
         await _carRepository.UpdateAsync(car);
         return NoContent();
@@ -116,6 +124,10 @@ public class CarsController : ControllerBase
         Year = car.Year,
         PricePerDay = car.PricePerDay,
         Status = car.Status.ToString(),
-        ImageUrl = car.ImageUrl
+        Category = car.Category.ToString(),
+        ImageUrl = car.ImageUrl,
+        Seats = car.Seats,
+        FuelType = car.FuelType,
+        Transmission = car.Transmission
     };
 }

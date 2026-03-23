@@ -1,317 +1,346 @@
 ﻿@model List<RentACar.Application.DTOs.CarDto>
 @{
-    ViewData["Title"] = "Ana Sayfa";
-    var isLoggedIn = !string.IsNullOrEmpty(Context.Session.GetString("JwtToken"));
+    ViewData["Title"] = "Arac Kiralama";
 }
 
-<!-- Hero -->
-<section class="hero-section text-white py-5">
-    <div class="container py-4 position-relative">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <span class="badge bg-primary bg-opacity-25 text-info mb-3 px-3 py-2">
-                    <i class="bi bi-star-fill me-1"></i>Türkiye'nin Güvenilir Kiralama Platformu
-                </span>
-                <h1 class="display-4 fw-bold mb-3 lh-sm">
-                    Hayalinizdeki Araçla<br><span style="color:#60a5fa">Yola Çıkın</span>
+<!-- HERO -->
+<section class="hero-section d-flex align-items-center">
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                <p class="text-uppercase fw-bold mb-2" style="color:var(--primary);letter-spacing:2px;font-size:.8rem">Turkiye'nin Guvenilir Kiralama Platformu</p>
+                <h1 class="display-4 text-white mb-3" style="font-weight:900;line-height:1.1">
+                    Hayalindeki<br><span style="color:var(--primary)">Arabay&#305;</span> Kirala
                 </h1>
-                <p class="lead text-white-50 mb-4">
-                    Yüzlerce araç seçeneği, anlık rezervasyon ve güvenli ödeme ile araç kiralama artık çok kolay.
-                </p>
-                @if (!isLoggedIn)
-                {
-                    <div class="d-flex gap-3 flex-wrap">
-                        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-4">
-                            <i class="bi bi-person-plus me-2"></i>Ücretsiz Kayıt Ol
-                        </a>
-                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg px-4">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
-                        </a>
+                <p class="text-white-50 mb-4">Premium'dan ekonomiye 18 farkl&#305; arac. An&#305;nda rezervasyon, ucretsiz iptal.</p>
+                <div class="d-flex gap-4">
+                    <div class="text-center"><div class="fw-bold text-white fs-4">18+</div><div class="text-white-50 small">Arac</div></div>
+                    <div class="border-start border-secondary"></div>
+                    <div class="text-center"><div class="fw-bold text-white fs-4">7/24</div><div class="text-white-50 small">Destek</div></div>
+                    <div class="border-start border-secondary"></div>
+                    <div class="text-center"><div class="fw-bold text-white fs-4">%100</div><div class="text-white-50 small">Guvenli</div></div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="search-box">
+                    <div class="d-flex gap-2 mb-4">
+                        <button class="search-tab active" id="tab-daily" onclick="setTab('daily')"><i class="bi bi-calendar-day me-1"></i>Gunluk</button>
+                        <button class="search-tab" id="tab-monthly" onclick="setTab('monthly')"><i class="bi bi-calendar-month me-1"></i>Aylik</button>
                     </div>
-                }
-                else
-                {
-                    <a href="#cars" class="btn btn-primary btn-lg px-4">
-                        <i class="bi bi-search me-2"></i>Araçlara Göz At
-                    </a>
-                }
-            </div>
-            <div class="col-lg-6 d-none d-lg-flex justify-content-end">
-                <i class="bi bi-car-front-fill" style="font-size:10rem; color:rgba(255,255,255,.07)"></i>
-            </div>
-        </div>
-
-        <!-- İstatistikler -->
-        <div class="row g-3 mt-4">
-            <div class="col-6 col-md-3">
-                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
-                    <div class="fw-bold fs-4">@Model.Count+</div>
-                    <div class="text-white-50 small">Müsait Araç</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
-                    <div class="fw-bold fs-4">7/24</div>
-                    <div class="text-white-50 small">Destek</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
-                    <div class="fw-bold fs-4">%100</div>
-                    <div class="text-white-50 small">Güvenli Ödeme</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="text-center p-3" style="background:rgba(255,255,255,.07); border-radius:12px;">
-                    <div class="fw-bold fs-4">Anında</div>
-                    <div class="text-white-50 small">Onay</div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="search-label">Alis Lokasyonu</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-geo-alt text-muted"></i></span>
+                                <input type="text" class="form-control border-start-0" placeholder="Sehir veya havalimani">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="search-label">Iade Lokasyonu</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-geo-alt-fill text-muted"></i></span>
+                                <input type="text" class="form-control border-start-0" placeholder="Sehir veya havalimani">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="search-label">Alis Tarihi</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-calendar3 text-muted"></i></span>
+                                <input type="date" class="form-control border-start-0" id="startDate">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="search-label">Iade Tarihi</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-calendar3-fill text-muted"></i></span>
+                                <input type="date" class="form-control border-start-0" id="endDate">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn w-100 fw-bold" style="background:var(--primary);color:#fff;height:52px;font-size:1rem;border-radius:4px;" onclick="scrollToCars()">
+                                <i class="bi bi-search me-2"></i>ARAC ARA
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Araç Listesi -->
-<section class="py-5" id="cars">
+<!-- CATEGORY FILTER -->
+<div style="background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:100">
     <div class="container">
-
-        <!-- Başlık + Filtre -->
-        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-            <div>
-                <h2 class="fw-bold mb-1">Müsait Araçlar</h2>
-                <p class="text-muted mb-0">@Model.Count araç listeleniyor</p>
-            </div>
-            <div class="d-flex gap-2">
-                <input type="text" id="searchInput" class="form-control" placeholder="Marka veya model ara..." style="width:220px" />
-                <select id="sortSelect" class="form-select" style="width:160px">
-                    <option value="">Sırala</option>
-                    <option value="price-asc">Fiyat: Düşük → Yüksek</option>
-                    <option value="price-desc">Fiyat: Yüksek → Düşük</option>
-                    <option value="year-desc">Yıl: Yeni → Eski</option>
-                </select>
-            </div>
+        <div class="d-flex gap-2 py-3 overflow-auto">
+            <button class="cat-btn active" onclick="filterCars(this,'all')"><i class="bi bi-grid me-1"></i>Tumu</button>
+            <button class="cat-btn" onclick="filterCars(this,'Premium')"><i class="bi bi-star me-1"></i>Premium</button>
+            <button class="cat-btn" onclick="filterCars(this,'SUV')"><i class="bi bi-truck me-1"></i>SUV</button>
+            <button class="cat-btn" onclick="filterCars(this,'Van')"><i class="bi bi-bus-front me-1"></i>Van</button>
+            <button class="cat-btn" onclick="filterCars(this,'Compact')"><i class="bi bi-car-front me-1"></i>Kompakt</button>
+            <button class="cat-btn" onclick="filterCars(this,'Economy')"><i class="bi bi-fuel-pump me-1"></i>Ekonomi</button>
         </div>
+    </div>
+</div>
 
+<!-- CARS -->
+<section id="cars-section" class="py-5">
+    <div class="container">
+        <div class="d-flex align-items-end justify-content-between mb-4">
+            <div>
+                <h2 class="section-title mb-0">Musait <span>Araclar</span></h2>
+                <div class="section-divider"></div>
+            </div>
+            <span class="text-muted small" id="car-count">@Model.Count arac listeleniyor</span>
+        </div>
         @if (!Model.Any())
         {
             <div class="text-center py-5">
-                <i class="bi bi-car-front text-muted" style="font-size:4rem"></i>
-                <h5 class="mt-3 text-muted">Şu an müsait araç bulunmamaktadır.</h5>
+                <i class="bi bi-car-front display-1 text-muted"></i>
+                <p class="text-muted mt-3">Su an musait arac bulunmuyor.</p>
             </div>
         }
         else
         {
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="carGrid">
+            <div class="row g-4" id="cars-grid">
                 @foreach (var car in Model)
                 {
-                    <div class="col car-item"
-                         data-name="@car.Brand @car.Model"
-                         data-price="@car.PricePerDay"
-                         data-year="@car.Year">
-                        <div class="card car-card h-100">
-                            @if (!string.IsNullOrEmpty(car.ImageUrl))
-                            {
-                                <img src="@car.ImageUrl" class="card-img-top"
-                                     alt="@car.Brand @car.Model"
-                                     style="height:210px; object-fit:cover;"
-                                     onerror="this.parentElement.querySelector('.card-img-placeholder').style.display='flex'; this.style.display='none';" />
-                            }
-                            <div class="card-img-placeholder @(string.IsNullOrEmpty(car.ImageUrl) ? "" : "d-none")">
-                                <i class="bi bi-car-front text-white-50" style="font-size:4rem"></i>
-                            </div>
-
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title fw-bold mb-0">@car.Brand @car.Model</h5>
-                                    <span class="badge badge-available rounded-pill">Müsait</span>
-                                </div>
-                                <p class="text-muted small mb-3">
-                                    <i class="bi bi-calendar3 me-1"></i>@car.Year model
-                                </p>
-                                <div class="d-flex align-items-baseline gap-1">
-                                    <span class="fs-4 fw-bold text-primary">₺@car.PricePerDay.ToString("N0")</span>
-                                    <span class="text-muted small">/ gün</span>
-                                </div>
-                            </div>
-
-                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
-                                @if (isLoggedIn)
+                    <div class="col-lg-3 col-md-4 col-sm-6 car-item" data-category="@car.Category">
+                        <div class="car-card h-100">
+                            <div class="car-img-wrap">
+                                @if (!string.IsNullOrEmpty(car.ImageUrl))
                                 {
-                                    <button class="btn btn-primary w-100 btn-reserve"
-                                            data-car-id="@car.Id"
-                                            data-car-name="@car.Brand @car.Model"
-                                            data-price="@car.PricePerDay">
-                                        <i class="bi bi-calendar-check me-2"></i>Rezervasyon Yap
-                                    </button>
+                                    <img src="@car.ImageUrl" alt="@car.Brand @car.Model" class="car-img"
+                                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                                    <div class="car-no-img" style="display:none">
+                                        <i class="bi bi-car-front-fill"></i>
+                                        <span>@car.Brand @car.Model</span>
+                                    </div>
                                 }
                                 else
                                 {
-                                    <a asp-controller="Account" asp-action="Login"
-                                       class="btn btn-outline-primary w-100">
-                                        <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yaparak Kirala
-                                    </a>
+                                    <div class="car-no-img">
+                                        <i class="bi bi-car-front-fill"></i>
+                                        <span>@car.Brand @car.Model</span>
+                                    </div>
                                 }
+                                <span class="car-cat-badge">@car.Category</span>
+                            </div>
+                            <div class="p-3">
+                                <h6 class="fw-bold mb-1">@car.Brand @car.Model</h6>
+                                <p class="text-muted small mb-3">@car.Year</p>
+                                <div class="car-features mb-3">
+                                    <span class="car-feature"><i class="bi bi-people-fill"></i> @car.Seats Kisi</span>
+                                    <span class="car-feature"><i class="bi bi-gear-fill"></i> @(car.Transmission ?? "Otomatik")</span>
+                                    <span class="car-feature"><i class="bi bi-fuel-pump-fill"></i> @(car.FuelType ?? "Benzin")</span>
+                                    <span class="car-feature"><i class="bi bi-snow"></i> Klima</span>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span class="price-tag fs-5">&#8378;@car.PricePerDay.ToString("N0")</span>
+                                        <span class="text-muted small">/gun</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm px-3"
+                                            onclick="openBookingModal(@car.Id, '@car.Brand @car.Model', @car.PricePerDay)">
+                                        Kirala
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-
-            <div id="noResults" class="text-center py-5 d-none">
-                <i class="bi bi-search text-muted" style="font-size:3rem"></i>
-                <p class="mt-3 text-muted">Arama kriterlerine uygun araç bulunamadı.</p>
-            </div>
         }
     </div>
 </section>
+<!-- WHY US -->
+<section class="py-5" style="background:#f8f9fa">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Neden <span>Bizi</span> Secmelisiniz?</h2>
+            <div class="section-divider mx-auto"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6"><div class="why-card"><div class="icon-wrap"><i class="bi bi-shield-check"></i></div><h6 class="fw-bold">Guvenli Araclar</h6><p class="text-muted small mb-0">Tum araclarimiz duzenli bakimdan gecer, sigortalidir.</p></div></div>
+            <div class="col-md-3 col-sm-6"><div class="why-card"><div class="icon-wrap"><i class="bi bi-lightning-charge"></i></div><h6 class="fw-bold">Aninda Onay</h6><p class="text-muted small mb-0">Rezervasyonunuz saniyeler icinde onaylanir.</p></div></div>
+            <div class="col-md-3 col-sm-6"><div class="why-card"><div class="icon-wrap"><i class="bi bi-cash-coin"></i></div><h6 class="fw-bold">En Iyi Fiyat</h6><p class="text-muted small mb-0">Piyasanin en rekabetci fiyatlarini sunuyoruz.</p></div></div>
+            <div class="col-md-3 col-sm-6"><div class="why-card"><div class="icon-wrap"><i class="bi bi-headset"></i></div><h6 class="fw-bold">7/24 Destek</h6><p class="text-muted small mb-0">Her an yanimizdayiz, sorunlarinizi hizla cozuyoruz.</p></div></div>
+        </div>
+    </div>
+</section>
 
-<!-- Rezervasyon Modal -->
-<div class="modal fade" id="reservationModal" tabindex="-1">
+<!-- REVIEWS -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Musteri <span>Yorumlari</span></h2>
+            <div class="section-divider mx-auto"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4"><div class="review-card"><div class="review-stars mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="mb-3 text-muted small">"Porsche Cayenne'yi kiraladim, arac mukemmeldi."</p><div class="d-flex align-items-center gap-2"><div class="reviewer-avatar">AK</div><div><div class="fw-bold small">Ahmet K.</div><div class="text-muted" style="font-size:.75rem">Premium Musteri</div></div></div></div></div>
+            <div class="col-md-4"><div class="review-card"><div class="review-stars mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="mb-3 text-muted small">"Fiyatlar cok uygun, araclar temiz ve bakimli."</p><div class="d-flex align-items-center gap-2"><div class="reviewer-avatar">SY</div><div><div class="fw-bold small">Selin Y.</div><div class="text-muted" style="font-size:.75rem">Duzenli Musteri</div></div></div></div></div>
+            <div class="col-md-4"><div class="review-card"><div class="review-stars mb-2">&#9733;&#9733;&#9733;&#9733;&#9734;</div><p class="mb-3 text-muted small">"Online rezervasyon cok kolay, arac tam zamaninda hazirdi."</p><div class="d-flex align-items-center gap-2"><div class="reviewer-avatar">MO</div><div><div class="fw-bold small">Murat O.</div><div class="text-muted" style="font-size:.75rem">Is Seyahati</div></div></div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5" style="background:var(--dark-bg)">
+    <div class="container text-center">
+        <h2 class="text-white fw-bold mb-3">Hemen Rezervasyon Yap</h2>
+        <p class="text-white-50 mb-4">Ucretsiz uyelik ile tum araclara aninda erisim sagla.</p>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5">
+            <i class="bi bi-person-plus me-2"></i>Ucretsiz Kayit Ol
+        </a>
+    </div>
+</section>
+
+<!-- BOOKING MODAL -->
+<div class="modal fade" id="bookingModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius:20px; overflow:hidden;">
-            <div class="modal-header border-0 pb-0 px-4 pt-4">
-                <div>
-                    <h5 class="modal-title fw-bold">Rezervasyon Yap</h5>
-                    <p class="text-muted small mb-0" id="modalCarName"></p>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-content border-0" style="border-radius:4px">
+            <div class="modal-header" style="background:var(--dark-bg);border-radius:4px 4px 0 0">
+                <h5 class="modal-title text-white fw-bold">
+                    <i class="bi bi-calendar-check me-2" style="color:var(--primary)"></i>
+                    <span id="modal-car-name">Arac Kiralama</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body px-4 py-3">
+            <div class="modal-body p-4">
+                <div class="alert alert-danger d-none" id="booking-error"></div>
+                <div class="alert alert-success d-none" id="booking-success"></div>
                 <div class="row g-3">
                     <div class="col-6">
-                        <label class="form-label fw-semibold small">Başlangıç Tarihi</label>
-                        <input type="date" class="form-control" id="startDate" />
+                        <label class="form-label fw-semibold small">Baslangic Tarihi</label>
+                        <input type="date" class="form-control" id="modal-start-date">
                     </div>
                     <div class="col-6">
-                        <label class="form-label fw-semibold small">Bitiş Tarihi</label>
-                        <input type="date" class="form-control" id="endDate" />
+                        <label class="form-label fw-semibold small">Bitis Tarihi</label>
+                        <input type="date" class="form-control" id="modal-end-date">
+                    </div>
+                    <div class="col-12">
+                        <div class="p-3 rounded" style="background:#fff4ee;border-left:4px solid var(--primary)">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold">Toplam Tutar</span>
+                                <span class="price-tag fs-5 fw-bold" id="modal-total">&#8378;0</span>
+                            </div>
+                            <div class="text-muted small mt-1" id="modal-days-info">Tarih seciniz</div>
+                        </div>
                     </div>
                 </div>
-
-                <div id="pricePreview" class="mt-3 p-3 d-none"
-                     style="background:#f0f9ff; border-radius:12px; border:1px solid #bae6fd;">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-muted small">Toplam Tutar</span>
-                        <span class="fw-bold fs-5 text-primary" id="totalPrice"></span>
-                    </div>
-                    <div class="text-muted small mt-1" id="dayCount"></div>
-                </div>
-
-                <div id="reservationResult" class="mt-3"></div>
             </div>
-            <div class="modal-footer border-0 px-4 pb-4 pt-0">
-                <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">İptal</button>
-                <button type="button" class="btn btn-primary px-4" id="confirmReservation">
-                    <i class="bi bi-check-lg me-1"></i>Onayla
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-primary px-4" id="confirm-booking-btn" onclick="submitBooking()">
+                    <i class="bi bi-check-circle me-1"></i>Rezervasyonu Onayla
                 </button>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts {
+<style>
+    .search-box{background:#fff;border-radius:4px;padding:2rem;box-shadow:0 8px 40px rgba(0,0,0,.3)}
+    .search-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#333;display:block;margin-bottom:6px}
+    .search-tab{background:#f1f5f9;border:none;border-radius:4px;padding:8px 18px;font-weight:600;font-size:.875rem;color:#555;cursor:pointer;transition:all .2s}
+    .search-tab.active{background:var(--primary);color:#fff}
+    .cat-btn{background:transparent;border:2px solid #e2e8f0;border-radius:50px;padding:6px 18px;font-weight:600;font-size:.85rem;color:#555;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .cat-btn.active,.cat-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+    .car-img-wrap{position:relative;height:200px;overflow:hidden;background:#1a1a1a}
+    .car-img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .car-card:hover .car-img{transform:scale(1.05)}
+    .car-no-img{width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2d2d2d);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:8px}
+    .car-no-img i{font-size:3rem;color:var(--primary)}
+    .car-no-img span{font-size:.85rem;font-weight:600;color:#ccc;text-align:center;padding:0 1rem}
+    .car-cat-badge{position:absolute;top:10px;left:10px;background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:50px}
+    .car-features{display:flex;flex-wrap:wrap;gap:6px}
+    .car-feature{background:#f1f5f9;border-radius:50px;padding:3px 10px;font-size:.75rem;color:#555;display:flex;align-items:center;gap:4px}
+    .car-feature i{color:var(--primary)}
+    .reviewer-avatar{width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+    .input-group-text{height:48px}
+    .input-group .form-control{height:48px}
+</style>
 <script>
-    const API_BASE = '@(Context.Session.GetString("ApiBaseUrl") ?? "https://localhost:7001")';
-    const JWT_TOKEN = '@Context.Session.GetString("JwtToken")';
-    let selectedCarId = 0, pricePerDay = 0;
-
-    // Rezervasyon modal aç
-    $(document).on('click', '.btn-reserve', function () {
-        selectedCarId = $(this).data('car-id');
-        pricePerDay = parseFloat($(this).data('price'));
-        $('#modalCarName').text($(this).data('car-name') + ' · ₺' + pricePerDay.toLocaleString('tr-TR') + '/gün');
-        $('#reservationResult').html('');
-        $('#pricePreview').addClass('d-none');
-        $('#confirmReservation').prop('disabled', false);
-
-        const today = new Date().toISOString().split('T')[0];
-        const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
-        $('#startDate').val(today).attr('min', today);
-        $('#endDate').val(tomorrow).attr('min', tomorrow);
-        calcPrice();
-
-        new bootstrap.Modal(document.getElementById('reservationModal')).show();
-    });
-
-    // Fiyat hesapla
-    function calcPrice() {
-        const start = new Date($('#startDate').val());
-        const end = new Date($('#endDate').val());
-        if (start && end && end > start) {
-            const days = Math.ceil((end - start) / 86400000);
-            const total = (days * pricePerDay).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
-            $('#totalPrice').text('₺' + total);
-            $('#dayCount').text(days + ' gün × ₺' + pricePerDay.toLocaleString('tr-TR') + '/gün');
-            $('#pricePreview').removeClass('d-none');
-        } else {
-            $('#pricePreview').addClass('d-none');
-        }
+    var currentCarId=0,currentPrice=0;
+    (function(){
+        var t=new Date(),s=new Date(t),e=new Date(t);
+        s.setDate(t.getDate()+1);e.setDate(t.getDate()+7);
+        var fmt=function(d){return d.toISOString().split("T")[0];};
+        document.getElementById("startDate").value=fmt(s);
+        document.getElementById("endDate").value=fmt(e);
+    })();
+    function setTab(type){
+        document.getElementById("tab-daily").classList.toggle("active",type==="daily");
+        document.getElementById("tab-monthly").classList.toggle("active",type==="monthly");
     }
-
-    $('#startDate, #endDate').on('change', calcPrice);
-
-    // Rezervasyon gönder
-    $('#confirmReservation').on('click', function () {
-        const startDate = $('#startDate').val();
-        const endDate = $('#endDate').val();
-
-        if (!startDate || !endDate || new Date(endDate) <= new Date(startDate)) {
-            $('#reservationResult').html('<div class="alert alert-warning py-2 small">Lütfen geçerli tarihler seçin.</div>');
-            return;
+    function scrollToCars(){document.getElementById("cars-section").scrollIntoView({behavior:"smooth"});}
+    function filterCars(btn,cat){
+        document.querySelectorAll(".cat-btn").forEach(function(b){b.classList.remove("active");});
+        btn.classList.add("active");
+        var items=document.querySelectorAll(".car-item"),count=0;
+        items.forEach(function(item){
+            var show=cat==="all"||item.dataset.category===cat;
+            item.style.display=show?"":"none";
+            if(show)count++;
+        });
+        document.getElementById("car-count").textContent=count+" arac listeleniyor";
+    }
+    function openBookingModal(carId,carName,price){
+        var token="@Html.Raw(Context.Session.GetString("JwtToken") ?? "")";
+        if(!token){window.location.href="/Account/Login";return;}
+        currentCarId=carId;currentPrice=price;
+        document.getElementById("modal-car-name").textContent=carName;
+        document.getElementById("booking-error").classList.add("d-none");
+        document.getElementById("booking-success").classList.add("d-none");
+        var t=new Date(),s=new Date(t),e=new Date(t);
+        s.setDate(t.getDate()+1);e.setDate(t.getDate()+7);
+        var fmt=function(d){return d.toISOString().split("T")[0];};
+        document.getElementById("modal-start-date").value=fmt(s);
+        document.getElementById("modal-end-date").value=fmt(e);
+        calcPrice();
+        new bootstrap.Modal(document.getElementById("bookingModal")).show();
+    }
+    function calcPrice(){
+        var sd=document.getElementById("modal-start-date").value;
+        var ed=document.getElementById("modal-end-date").value;
+        if(!sd||!ed)return;
+        var days=Math.max(1,Math.round((new Date(ed)-new Date(sd))/86400000));
+        var total=days*currentPrice;
+        document.getElementById("modal-total").textContent="&#8378;"+total.toLocaleString("tr-TR");
+        document.getElementById("modal-days-info").textContent=days+" gun x &#8378;"+currentPrice.toLocaleString("tr-TR")+"/gun";
+    }
+    document.addEventListener("DOMContentLoaded",function(){
+        document.getElementById("modal-start-date").addEventListener("change",calcPrice);
+        document.getElementById("modal-end-date").addEventListener("change",calcPrice);
+    });
+    function submitBooking(){
+        var sd=document.getElementById("modal-start-date").value;
+        var ed=document.getElementById("modal-end-date").value;
+        var errEl=document.getElementById("booking-error");
+        var sucEl=document.getElementById("booking-success");
+        errEl.classList.add("d-none");sucEl.classList.add("d-none");
+        if(!sd||!ed||new Date(ed)<=new Date(sd)){
+            errEl.textContent="Lutfen gecerli tarih araligi seciniz.";
+            errEl.classList.remove("d-none");return;
         }
-
-        const $btn = $(this).prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Gönderiliyor...');
-
+        var btn=document.getElementById("confirm-booking-btn");
+        btn.disabled=true;
+        btn.innerHTML="<span class=\"spinner-border spinner-border-sm me-1\"></span>Isleniyor...";
         $.ajax({
-            url: API_BASE + '/api/bookings',
-            method: 'POST',
-            contentType: 'application/json',
-            headers: { 'Authorization': 'Bearer ' + JWT_TOKEN },
-            data: JSON.stringify({ carId: selectedCarId, startDate, endDate }),
-            success: function () {
-                $('#reservationResult').html(
-                    '<div class="alert alert-success py-2 small mb-0"><i class="bi bi-check-circle me-2"></i>Rezervasyon başarıyla oluşturuldu!</div>'
-                );
-                setTimeout(() => { bootstrap.Modal.getInstance(document.getElementById('reservationModal')).hide(); location.reload(); }, 2000);
+            url:"/Booking/Create",method:"POST",contentType:"application/json",
+            data:JSON.stringify({carId:currentCarId,startDate:sd,endDate:ed}),
+            success:function(res){
+                sucEl.textContent="Rezervasyonunuz basariyla olusturuldu!";
+                sucEl.classList.remove("d-none");
+                btn.disabled=false;
+                btn.innerHTML="<i class=\"bi bi-check-circle me-1\"></i>Rezervasyonu Onayla";
+                setTimeout(function(){bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();},2000);
             },
-            error: function (xhr) {
-                const msg = xhr.responseJSON?.message || 'Bir hata oluştu.';
-                $('#reservationResult').html('<div class="alert alert-danger py-2 small mb-0"><i class="bi bi-exclamation-circle me-2"></i>' + msg + '</div>');
-                $btn.prop('disabled', false).html('<i class="bi bi-check-lg me-1"></i>Onayla');
+            error:function(xhr){
+                var msg=(xhr.responseJSON&&xhr.responseJSON.message)?xhr.responseJSON.message:"Rezervasyon olusturulamadi.";
+                errEl.textContent=msg;errEl.classList.remove("d-none");
+                btn.disabled=false;
+                btn.innerHTML="<i class=\"bi bi-check-circle me-1\"></i>Rezervasyonu Onayla";
             }
         });
-    });
-
-    // Arama filtresi
-    $('#searchInput').on('input', filterCars);
-    $('#sortSelect').on('change', filterCars);
-
-    function filterCars() {
-        const q = $('#searchInput').val().toLowerCase();
-        const sort = $('#sortSelect').val();
-        let items = $('.car-item').toArray();
-
-        // Filtrele
-        items.forEach(el => {
-            const name = $(el).data('name').toLowerCase();
-            $(el).toggle(name.includes(q));
-        });
-
-        // Sırala
-        if (sort) {
-            const visible = items.filter(el => $(el).is(':visible'));
-            visible.sort((a, b) => {
-                if (sort === 'price-asc') return $(a).data('price') - $(b).data('price');
-                if (sort === 'price-desc') return $(b).data('price') - $(a).data('price');
-                if (sort === 'year-desc') return $(b).data('year') - $(a).data('year');
-                return 0;
-            });
-            const grid = $('#carGrid');
-            visible.forEach(el => grid.append(el));
-        }
-
-        const visibleCount = $('.car-item:visible').length;
-        $('#noResults').toggleClass('d-none', visibleCount > 0);
     }
 </script>
 }
