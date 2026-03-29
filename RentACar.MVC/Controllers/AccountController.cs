@@ -72,7 +72,29 @@ public class AccountController : Controller
             return RedirectToAction(nameof(Login));
         }
 
-        ViewBag.Error = "Kayıt sırasında bir hata oluştu.";
+        // API'den gelen hata mesajını göster
+        var errorJson = await response.Content.ReadAsStringAsync();
+        try
+        {
+            var errorObj = JsonSerializer.Deserialize<JsonElement>(errorJson, _jsonOptions);
+            if (errorObj.TryGetProperty("message", out var msg))
+            {
+                ViewBag.Error = msg.GetString();
+            }
+            else
+            {
+                // Identity validation errors (array)
+                var errors = errorObj.EnumerateArray()
+                    .Select(e => e.TryGetProperty("description", out var d) ? d.GetString() : null)
+                    .Where(e => e != null);
+                ViewBag.Error = string.Join(" ", errors);
+            }
+        }
+        catch
+        {
+            ViewBag.Error = "Kayıt sırasında bir hata oluştu.";
+        }
+
         return View(dto);
     }
 

@@ -92,12 +92,13 @@
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-lock text-muted"></i></span>
                         <input asp-for="Password" type="password" class="form-control" id="passwordInput"
-                               placeholder="En az 6 karakter" autocomplete="new-password"
+                               placeholder="Büyük harf, rakam ve özel karakter içermeli" autocomplete="new-password"
                                oninput="checkStrength(this.value)" />
                         <button type="button" class="btn btn-outline-secondary" id="togglePassword" style="border-radius:0 10px 10px 0;">
                             <i class="bi bi-eye" id="eyeIcon"></i>
                         </button>
                     </div>
+                    <div class="mt-1 small text-muted"><i class="bi bi-info-circle me-1"></i>En az 6 karakter, 1 büyük harf, 1 rakam, 1 özel karakter (!@@#$%)</div>
                 </div>
                 <!-- Şifre güç göstergesi -->
                 <div class="mb-4">

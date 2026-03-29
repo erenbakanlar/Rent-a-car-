@@ -32,4 +32,6 @@ public class HomeController : Controller
 
         return View(new List<CarDto>());
     }
+
+    public IActionResult About() => View();
 }
