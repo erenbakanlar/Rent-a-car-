@@ -20,9 +20,12 @@ public static class ServiceExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        // EF Core - SQL Server
+        // EF Core - MySQL (XAMPP)
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            options.UseMySql(
+                configuration.GetConnectionString("DefaultConnection"),
+                ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))
+            ));
 
         // ASP.NET Identity
         services.AddIdentity<IdentityUser, IdentityRole>(options =>
