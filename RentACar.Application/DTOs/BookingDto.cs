@@ -2,9 +2,6 @@ using RentACar.Domain.Entities;
 
 namespace RentACar.Application.DTOs;
 
-/// <summary>
-/// Rezervasyon listeleme için kullanılan DTO
-/// </summary>
 public class BookingDto
 {
     public int Id { get; set; }
@@ -18,9 +15,6 @@ public class BookingDto
     public string Status { get; set; } = string.Empty;
 }
 
-/// <summary>
-/// Yeni rezervasyon oluşturmak için kullanılan DTO
-/// </summary>
 public class CreateBookingDto
 {
     public int CarId { get; set; }
@@ -28,9 +22,6 @@ public class CreateBookingDto
     public DateTime EndDate { get; set; }
 }
 
-/// <summary>
-/// Rezervasyon durumu güncellemek için kullanılan DTO
-/// </summary>
 public class UpdateBookingStatusDto
 {
     public BookingStatus Status { get; set; }

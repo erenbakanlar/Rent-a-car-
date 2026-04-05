@@ -4,18 +4,15 @@ using RentACar.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Katmanlı mimari servislerini kaydet (Infrastructure extension)
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Swagger - JWT desteğiyle
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new() { Title = "RentACar API", Version = "v1" });
 
-    // Swagger'a JWT Bearer token desteği ekle
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -52,13 +49,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Sıralama önemli: Authentication -> Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-// Uygulama başlarken migration'ları otomatik uygula
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

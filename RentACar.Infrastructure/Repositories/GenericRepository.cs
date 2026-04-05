@@ -4,9 +4,6 @@ using RentACar.Infrastructure.Data;
 
 namespace RentACar.Infrastructure.Repositories;
 
-/// <summary>
-/// Generic repository implementasyonu - temel CRUD işlemleri
-/// </summary>
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     protected readonly AppDbContext _context;

@@ -11,23 +11,18 @@ using RentACar.Infrastructure.Repositories;
 
 namespace RentACar.Infrastructure.Extensions;
 
-/// <summary>
-/// Infrastructure servislerini DI container'a kaydeden extension metotlar
-/// </summary>
 public static class ServiceExtensions
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        // EF Core - MySQL (XAMPP)
         services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(
                 configuration.GetConnectionString("DefaultConnection"),
                 ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))
             ));
 
-        // ASP.NET Identity
         services.AddIdentity<IdentityUser, IdentityRole>(options =>
         {
             options.Password.RequireDigit = true;
@@ -38,7 +33,6 @@ public static class ServiceExtensions
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
-        // JWT Authentication
         var jwtSettings = configuration.GetSection("JwtSettings");
         var secretKey = jwtSettings["SecretKey"]!;
 
@@ -61,7 +55,6 @@ public static class ServiceExtensions
             };
         });
 
-        // Repository kayıtları
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ICarRepository, CarRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();

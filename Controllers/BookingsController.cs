@@ -21,9 +21,6 @@ public class BookingsController : ControllerBase
         _carRepository = carRepository;
     }
 
-    /// <summary>
-    /// Tüm rezervasyonları listeler (sadece Admin)
-    /// </summary>
     [HttpGet]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
@@ -32,9 +29,6 @@ public class BookingsController : ControllerBase
         return Ok(bookings.Select(MapToDto));
     }
 
-    /// <summary>
-    /// Giriş yapan kullanıcının rezervasyonlarını getirir
-    /// </summary>
     [HttpGet("my")]
     public async Task<IActionResult> GetMyBookings()
     {
@@ -43,9 +37,6 @@ public class BookingsController : ControllerBase
         return Ok(bookings.Select(MapToDto));
     }
 
-    /// <summary>
-    /// ID'ye göre rezervasyon getirir
-    /// </summary>
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -62,9 +53,6 @@ public class BookingsController : ControllerBase
         return Ok(MapToDto(booking));
     }
 
-    /// <summary>
-    /// Yeni rezervasyon oluşturur
-    /// </summary>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateBookingDto dto)
     {
@@ -100,9 +88,6 @@ public class BookingsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, MapToDto(created));
     }
 
-    /// <summary>
-    /// Rezervasyon durumunu günceller (sadece Admin)
-    /// </summary>
     [HttpPatch("{id}/status")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateBookingStatusDto dto)
@@ -127,9 +112,6 @@ public class BookingsController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>
-    /// Rezervasyon iptal eder (kullanıcı kendi rezervasyonunu iptal edebilir)
-    /// </summary>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Cancel(int id)
     {
@@ -160,7 +142,6 @@ public class BookingsController : ControllerBase
         return NoContent();
     }
 
-    // Entity -> DTO dönüşümü
     private static BookingDto MapToDto(Booking b) => new()
     {
         Id = b.Id,

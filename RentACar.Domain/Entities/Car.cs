@@ -1,8 +1,5 @@
 namespace RentACar.Domain.Entities;
 
-/// <summary>
-/// Araç entity'si - sistemdeki kiralık araçları temsil eder
-/// </summary>
 public class Car
 {
     public int Id { get; set; }
@@ -14,8 +11,8 @@ public class Car
     public CarCategory Category { get; set; } = CarCategory.Economy;
     public string? ImageUrl { get; set; }
     public int Seats { get; set; } = 5;
-    public string? FuelType { get; set; }   // Benzin, Dizel, Elektrik, Hibrit
-    public string? Transmission { get; set; } // Manuel, Otomatik
+    public string? FuelType { get; set; }
+    public string? Transmission { get; set; }
 
     public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 }
@@ -29,9 +26,9 @@ public enum CarStatus
 
 public enum CarCategory
 {
-    Economy = 0,    // Ekonomi
-    Compact = 1,    // Kompakt
-    SUV = 2,        // SUV
-    Premium = 3,    // Premium
-    Van = 4         // Van / Minivan
+    Economy = 0,
+    Compact = 1,
+    SUV = 2,
+    Premium = 3,
+    Van = 4
 }

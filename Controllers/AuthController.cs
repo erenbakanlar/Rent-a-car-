@@ -26,9 +26,6 @@ public class AuthController : ControllerBase
         _configuration = configuration;
     }
 
-    /// <summary>
-    /// Yeni kullanıcı kaydı
-    /// </summary>
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
@@ -59,9 +56,6 @@ public class AuthController : ControllerBase
         return Ok(new { message = "Kayıt başarılı." });
     }
 
-    /// <summary>
-    /// Kullanıcı girişi - JWT token döner
-    /// </summary>
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {
@@ -85,9 +79,6 @@ public class AuthController : ControllerBase
         });
     }
 
-    /// <summary>
-    /// Admin rolü oluşturma (sadece geliştirme amaçlı)
-    /// </summary>
     [HttpPost("create-admin")]
     public async Task<IActionResult> CreateAdmin([FromBody] RegisterDto dto)
     {
@@ -106,7 +97,6 @@ public class AuthController : ControllerBase
         return Ok(new { message = "Admin kullanıcı oluşturuldu." });
     }
 
-    // JWT token üretimi
     private (string Token, DateTime Expiration) GenerateJwtToken(
         IdentityUser user, IList<string> roles, string fullName)
     {

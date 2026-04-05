@@ -5,9 +5,6 @@ using RentACar.Domain.Entities;
 
 namespace RentACar.Infrastructure.Data;
 
-/// <summary>
-/// Uygulama veritabanı context'i - Identity ile entegre
-/// </summary>
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }

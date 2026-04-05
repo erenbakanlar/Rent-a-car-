@@ -1,8 +1,5 @@
 namespace RentACar.Application.Interfaces;
 
-/// <summary>
-/// Generic repository pattern - tüm entity'ler için temel CRUD operasyonları
-/// </summary>
 public interface IGenericRepository<T> where T : class
 {
     Task<IEnumerable<T>> GetAllAsync();

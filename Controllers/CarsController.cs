@@ -17,9 +17,6 @@ public class CarsController : ControllerBase
         _carRepository = carRepository;
     }
 
-    /// <summary>
-    /// Tüm araçları listeler (herkese açık)
-    /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -28,9 +25,6 @@ public class CarsController : ControllerBase
         return Ok(result);
     }
 
-    /// <summary>
-    /// Sadece müsait araçları listeler
-    /// </summary>
     [HttpGet("available")]
     public async Task<IActionResult> GetAvailable()
     {
@@ -38,9 +32,6 @@ public class CarsController : ControllerBase
         return Ok(cars.Select(MapToDto));
     }
 
-    /// <summary>
-    /// ID'ye göre araç getirir
-    /// </summary>
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -49,9 +40,6 @@ public class CarsController : ControllerBase
         return Ok(MapToDto(car));
     }
 
-    /// <summary>
-    /// Yeni araç ekler (sadece Admin)
-    /// </summary>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromBody] CreateCarDto dto)
@@ -74,9 +62,6 @@ public class CarsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, MapToDto(created));
     }
 
-    /// <summary>
-    /// Araç bilgilerini günceller (sadece Admin)
-    /// </summary>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateCarDto dto)
@@ -101,9 +86,6 @@ public class CarsController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>
-    /// Araç siler (sadece Admin)
-    /// </summary>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
@@ -115,7 +97,6 @@ public class CarsController : ControllerBase
         return NoContent();
     }
 
-    // Entity -> DTO dönüşümü
     private static CarDto MapToDto(Car car) => new()
     {
         Id = car.Id,
