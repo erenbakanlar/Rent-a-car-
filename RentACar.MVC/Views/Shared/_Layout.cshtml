@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
@@ -19,16 +19,16 @@
         body { background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif; }
 
         /* Navbar */
-        .navbar { background: var(--dark-bg) !important; padding: 0.75rem 0; border-bottom: 3px solid var(--primary); }
-        .navbar-brand { font-weight: 900; font-size: 1.6rem; letter-spacing: -1px; color: #fff !important; }
+        .navbar { background: var(--dark-bg) !important; padding: 0.5rem 0; border-bottom: 3px solid var(--primary); }
+        .navbar-brand { font-weight: 900; font-size: 1.4rem; letter-spacing: -1px; color: #fff !important; }
         .navbar-brand span { color: var(--primary); }
-        .nav-link { font-weight: 500; transition: color .2s; }
+        .nav-link { font-weight: 500; transition: color .2s; font-size: .875rem; padding: .4rem .6rem !important; }
         .nav-link:hover { color: var(--primary) !important; }
         .nav-user-badge {
             background: rgba(255,255,255,.1);
             border-radius: 20px;
-            padding: 4px 14px;
-            font-size: .875rem;
+            padding: 4px 12px;
+            font-size: .8rem;
         }
         .dropdown-menu {
             background: #fff;
@@ -257,114 +257,84 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto gap-1">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
-                        <i class="bi bi-house me-1"></i>Ana Sayfa
-                    </a>
+                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                 </li>
-                
-                <!-- Araçlar Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-car-front me-1"></i>Araçlar
-                    </a>
+                    <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Araclar</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-fragment="cars-section"><i class="bi bi-grid me-2"></i>Tüm Araçlar</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-star me-2"></i>Premium Araçlar</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-truck me-2"></i>SUV & Arazi</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-fuel-pump me-2"></i>Ekonomik Araçlar</a></li>
+                        <li><a class="dropdown-item" href="/?scroll=cars&cat=all"><i class="bi bi-grid me-2"></i>Tum Araclar</a></li>
+                        <li><a class="dropdown-item" href="/?scroll=cars&cat=Premium"><i class="bi bi-star me-2"></i>Premium</a></li>
+                        <li><a class="dropdown-item" href="/?scroll=cars&cat=SUV"><i class="bi bi-truck me-2"></i>SUV & Arazi</a></li>
+                        <li><a class="dropdown-item" href="/?scroll=cars&cat=Economy"><i class="bi bi-fuel-pump me-2"></i>Ekonomik</a></li>
                     </ul>
                 </li>
-
-                <!-- Rezervasyon Yönetimi Dropdown -->
                 @if (!string.IsNullOrEmpty(Context.Session.GetString("JwtToken")))
                 {
                     <li class="nav-item dropdown">
-                        <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-calendar-check me-1"></i>Rezervasyon Yönetimi
-                        </a>
+                        <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Rezervasyon</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-controller="Booking" asp-action="MyBookings"><i class="bi bi-list-check me-2"></i>Rezervasyonlarım</a></li>
-                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Index"><i class="bi bi-plus-circle me-2"></i>Yeni Rezervasyon</a></li>
+                            <li><a class="dropdown-item" asp-controller="Booking" asp-action="MyBookings"><i class="bi bi-list-check me-2"></i>Rezervasyonlarim</a></li>
+                            <li><a class="dropdown-item" href="/?scroll=cars"><i class="bi bi-plus-circle me-2"></i>Yeni Rezervasyon</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-x-circle me-2"></i>İptal Talebi</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-clock-history me-2"></i>Geçmiş Rezervasyonlar</a></li>
+                            <li><a class="dropdown-item" asp-controller="Booking" asp-action="MyBookings"><i class="bi bi-clock-history me-2"></i>Gecmis</a></li>
                         </ul>
                     </li>
                 }
-
-                <!-- Kampanyalar Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-gift me-1"></i>Kampanyalar
-                    </a>
+                    <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Kampanyalar</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-percent me-2"></i>Güncel Kampanyalar</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-event me-2"></i>Hafta Sonu Fırsatları</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-month me-2"></i>Aylık Kiralama</a></li>
+                        <li><a class="dropdown-item" href="/?scroll=campaigns"><i class="bi bi-percent me-2"></i>Guncel Kampanyalar</a></li>
+                        <li><a class="dropdown-item" href="/?scroll=campaigns"><i class="bi bi-calendar-event me-2"></i>Hafta Sonu</a></li>
+                        <li><a class="dropdown-item" href="/?scroll=campaigns"><i class="bi bi-calendar-month me-2"></i>Aylik Kiralama</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-trophy me-2"></i>Sadakat Programı</a></li>
+                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Register"><i class="bi bi-trophy me-2"></i>Sadakat Programi</a></li>
                     </ul>
                 </li>
-
-                <!-- Bayilerimiz Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-geo-alt me-1"></i>Bayilerimiz
-                    </a>
+                    <a class="nav-link text-white-50 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Bayilerimiz</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-map me-2"></i>Tüm Şubeler</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-building me-2"></i>İstanbul</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-building me-2"></i>Ankara</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-building me-2"></i>İzmir</a></li>
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Branches"><i class="bi bi-map me-2"></i>Tum Subeler</a></li>
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Branches" asp-route-city="istanbul"><i class="bi bi-building me-2"></i>Istanbul</a></li>
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Branches" asp-route-city="ankara"><i class="bi bi-building me-2"></i>Ankara</a></li>
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Branches" asp-route-city="izmir"><i class="bi bi-building me-2"></i>Izmir</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-telephone me-2"></i>İletişim</a></li>
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="About"><i class="bi bi-telephone me-2"></i>Iletisim</a></li>
                     </ul>
                 </li>
-
-                <!-- Hakkımızda -->
                 <li class="nav-item">
-                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="About">
-                        <i class="bi bi-info-circle me-1"></i>Hakkımızda
-                    </a>
+                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="About">Hakkimizda</a>
                 </li>
-
+            </ul>
+            <ul class="navbar-nav align-items-center gap-2">
                 @if (Context.Session.GetString("UserRoles")?.Contains("Admin") == true)
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" asp-controller="Admin" asp-action="Index">
-                            <i class="bi bi-speedometer2 me-1"></i>Admin Panel
+                        <a class="nav-link" asp-controller="Admin" asp-action="Index" style="color:var(--primary);font-weight:700">
+                            <i class="bi bi-speedometer2 me-1"></i>Admin
                         </a>
                     </li>
                 }
-            </ul>
-            <ul class="navbar-nav align-items-center gap-2">
                 @if (!string.IsNullOrEmpty(Context.Session.GetString("JwtToken")))
                 {
-                    <li class="nav-item">
-                        <span class="nav-user-badge text-white">
-                            <i class="bi bi-person-circle me-1 text-info"></i>
-                            @Context.Session.GetString("UserFullName")
-                        </span>
+                    <li class="nav-item d-flex align-items-center gap-1 text-white-50 small">
+                        <i class="bi bi-person-circle text-info"></i>
+                        <span>@Context.Session.GetString("UserFullName")</span>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-sm btn-outline-danger" asp-controller="Account" asp-action="Logout">
-                            <i class="bi bi-box-arrow-right me-1"></i>Çıkış
+                        <a class="btn btn-sm btn-outline-danger" asp-controller="Account" asp-action="Logout" title="Cikis">
+                            <i class="bi bi-box-arrow-right"></i>
                         </a>
                     </li>
                 }
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" asp-controller="Account" asp-action="Login">
-                            <i class="bi bi-box-arrow-in-right me-1"></i>Giriş
-                        </a>
+                        <a class="nav-link text-white-50" asp-controller="Account" asp-action="Login">Giris</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-sm btn-primary" asp-controller="Account" asp-action="Register">
-                            <i class="bi bi-person-plus me-1"></i>Kayıt Ol
-                        </a>
+                        <a class="btn btn-sm btn-primary" asp-controller="Account" asp-action="Register">Kayit Ol</a>
                     </li>
                 }
             </ul>

@@ -1,0 +1,312 @@
+@{
+    ViewData["Title"] = "Bayilerimiz";
+}
+
+<!-- PAGE HEADER -->
+<div style="background:var(--dark-bg);padding:4rem 0 3rem;border-bottom:4px solid var(--primary)">
+    <div class="container">
+        <p class="text-uppercase fw-bold mb-2" style="color:var(--primary);letter-spacing:2px;font-size:.8rem">
+            <i class="bi bi-house me-1"></i>Ana Sayfa &rsaquo; Bayilerimiz
+        </p>
+        <h1 class="text-white fw-bold mb-2" style="font-size:2.5rem">Bayilerimiz</h1>
+        <p class="text-white-50 mb-0">Türkiye genelinde 20+ şubemizle hizmetinizdeyiz</p>
+    </div>
+</div>
+
+<!-- STATS -->
+<section class="py-4" style="background:#fff;border-bottom:1px solid #e2e8f0">
+    <div class="container">
+        <div class="row g-3 text-center">
+            <div class="col-6 col-md-3">
+                <div class="fw-bold fs-3" style="color:var(--primary)">20+</div>
+                <div class="text-muted small">Şube</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="fw-bold fs-3" style="color:var(--primary)">81</div>
+                <div class="text-muted small">İlde Hizmet</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="fw-bold fs-3" style="color:var(--primary)">7/24</div>
+                <div class="text-muted small">Açık Şubeler</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="fw-bold fs-3" style="color:var(--primary)">3</div>
+                <div class="text-muted small">Havalimanı Şubesi</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CITY FILTER -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex align-items-end justify-content-between mb-4 flex-wrap gap-3">
+            <div>
+                <h2 class="section-title mb-0">Şubelerimiz</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <button class="branch-filter active" onclick="filterBranch(this,'all')">Tümü</button>
+                <button class="branch-filter" onclick="filterBranch(this,'istanbul')">İstanbul</button>
+                <button class="branch-filter" onclick="filterBranch(this,'ankara')">Ankara</button>
+                <button class="branch-filter" onclick="filterBranch(this,'izmir')">İzmir</button>
+                <button class="branch-filter" onclick="filterBranch(this,'diger')">Diğer</button>
+            </div>
+        </div>
+
+        <div class="row g-4" id="branches-grid">
+
+            <!-- İSTANBUL -->
+            <div class="col-lg-4 col-md-6 branch-item" data-city="istanbul">
+                <div class="branch-card">
+                    <div class="branch-city-tag">İstanbul</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon"><i class="bi bi-building"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">İstanbul Merkez Şube</h6>
+                            <span class="branch-badge open">Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Levent Mah. Büyükdere Cad. No:185, Şişli</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0212 345 67 89</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>Pazartesi - Pazar: 08:00 - 22:00</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>45 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 branch-item" data-city="istanbul">
+                <div class="branch-card">
+                    <div class="branch-city-tag">İstanbul</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon"><i class="bi bi-airplane"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">İstanbul Havalimanı Şubesi</h6>
+                            <span class="branch-badge open">Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>İstanbul Havalimanı, Terminal B, Arnavutköy</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0212 456 78 90</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>7/24 Hizmet</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>60 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 branch-item" data-city="istanbul">
+                <div class="branch-card">
+                    <div class="branch-city-tag">İstanbul</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon"><i class="bi bi-building"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Kadıköy Şubesi</h6>
+                            <span class="branch-badge open">Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Moda Cad. No:42, Kadıköy</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0216 234 56 78</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>Pazartesi - Cumartesi: 09:00 - 20:00</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>30 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <!-- ANKARA -->
+            <div class="col-lg-4 col-md-6 branch-item" data-city="ankara">
+                <div class="branch-card">
+                    <div class="branch-city-tag" style="background:#1d4ed8">Ankara</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon" style="background:#eff6ff;color:#1d4ed8"><i class="bi bi-building"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Ankara Merkez Şube</h6>
+                            <span class="branch-badge open">Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Kızılay Mah. Atatürk Bulvarı No:78, Çankaya</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0312 345 67 89</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>Pazartesi - Pazar: 08:00 - 21:00</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>40 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 branch-item" data-city="ankara">
+                <div class="branch-card">
+                    <div class="branch-city-tag" style="background:#1d4ed8">Ankara</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon" style="background:#eff6ff;color:#1d4ed8"><i class="bi bi-airplane"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Esenboğa Havalimanı</h6>
+                            <span class="branch-badge open">7/24 Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Esenboğa Havalimanı, Dış Hatlar Terminali</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0312 456 78 90</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>7/24 Hizmet</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>35 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <!-- İZMİR -->
+            <div class="col-lg-4 col-md-6 branch-item" data-city="izmir">
+                <div class="branch-card">
+                    <div class="branch-city-tag" style="background:#0891b2">İzmir</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon" style="background:#ecfeff;color:#0891b2"><i class="bi bi-building"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">İzmir Merkez Şube</h6>
+                            <span class="branch-badge open">Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Alsancak Mah. Kıbrıs Şehitleri Cad. No:55</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0232 345 67 89</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>Pazartesi - Pazar: 08:00 - 21:00</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>35 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <!-- DİĞER -->
+            <div class="col-lg-4 col-md-6 branch-item" data-city="diger">
+                <div class="branch-card">
+                    <div class="branch-city-tag" style="background:#7c3aed">Antalya</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon" style="background:#f5f3ff;color:#7c3aed"><i class="bi bi-airplane"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Antalya Havalimanı</h6>
+                            <span class="branch-badge open">7/24 Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Antalya Havalimanı, İç Hatlar Terminali</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0242 345 67 89</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>7/24 Hizmet</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>50 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 branch-item" data-city="diger">
+                <div class="branch-card">
+                    <div class="branch-city-tag" style="background:#059669">Bursa</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon" style="background:#ecfdf5;color:#059669"><i class="bi bi-building"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Bursa Merkez Şube</h6>
+                            <span class="branch-badge open">Açık</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Nilüfer Mah. Fethiye Cad. No:12, Nilüfer</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0224 345 67 89</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>Pazartesi - Cumartesi: 09:00 - 19:00</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>25 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 branch-item" data-city="diger">
+                <div class="branch-card">
+                    <div class="branch-city-tag" style="background:#b45309">Trabzon</div>
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="branch-icon" style="background:#fffbeb;color:#b45309"><i class="bi bi-building"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Trabzon Şubesi</h6>
+                            <span class="branch-badge closed">Hafta içi</span>
+                        </div>
+                    </div>
+                    <div class="branch-info">
+                        <div class="branch-info-row"><i class="bi bi-geo-alt-fill"></i><span>Ortahisar Mah. Uzun Sokak No:8, Trabzon</span></div>
+                        <div class="branch-info-row"><i class="bi bi-telephone-fill"></i><span>0462 345 67 89</span></div>
+                        <div class="branch-info-row"><i class="bi bi-clock-fill"></i><span>Pazartesi - Cuma: 09:00 - 18:00</span></div>
+                        <div class="branch-info-row"><i class="bi bi-car-front-fill"></i><span>20 araç kapasitesi</span></div>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-3">
+                        <i class="bi bi-map me-1"></i>Haritada Göster
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT CTA -->
+<section class="py-5" style="background:var(--dark-bg)">
+    <div class="container text-center">
+        <h2 class="text-white fw-bold mb-3">Şubenizi Bulamadınız mı?</h2>
+        <p class="text-white-50 mb-4">Türkiye'nin her yerine araç teslimi yapıyoruz. Bize ulaşın.</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="tel:08501234567" class="btn btn-primary btn-lg px-4">
+                <i class="bi bi-telephone me-2"></i>0850 123 45 67
+            </a>
+            <a href="mailto:info@rentacar.com" class="btn btn-outline-light btn-lg px-4">
+                <i class="bi bi-envelope me-2"></i>info@rentacar.com
+            </a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+<style>
+    .branch-card{background:#fff;border-radius:8px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);transition:transform .25s;height:100%;position:relative;overflow:hidden}
+    .branch-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.14)}
+    .branch-city-tag{position:absolute;top:0;right:0;background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:4px 14px;border-radius:0 8px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+    .branch-icon{width:48px;height:48px;background:#fff4ee;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--primary);flex-shrink:0}
+    .branch-badge{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:50px}
+    .branch-badge.open{background:#dcfce7;color:#166534}
+    .branch-badge.closed{background:#fef9c3;color:#854d0e}
+    .branch-info{display:flex;flex-direction:column;gap:8px}
+    .branch-info-row{display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:#555}
+    .branch-info-row i{color:var(--primary);flex-shrink:0;margin-top:2px}
+    .branch-filter{background:transparent;border:2px solid #e2e8f0;border-radius:50px;padding:6px 18px;font-weight:600;font-size:.85rem;color:#555;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .branch-filter.active,.branch-filter:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+</style>
+<script>
+    function filterBranch(btn, city) {
+        document.querySelectorAll('.branch-filter').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        document.querySelectorAll('.branch-item').forEach(function(item) {
+            item.style.display = (city === 'all' || item.dataset.city === city) ? '' : 'none';
+        });
+    }
+
+    // URL'den şehir parametresi varsa filtrele
+    var cityParam = new URLSearchParams(window.location.search).get('city');
+    if (cityParam) {
+        var btn = document.querySelector('.branch-filter[onclick*="' + cityParam + '"]');
+        if (btn) filterBranch(btn, cityParam);
+    }
+</script>
+}

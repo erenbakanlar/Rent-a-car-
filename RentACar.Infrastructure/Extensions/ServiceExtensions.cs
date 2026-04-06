@@ -18,9 +18,8 @@ public static class ServiceExtensions
         IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options =>
-            options.UseMySql(
-                configuration.GetConnectionString("DefaultConnection"),
-                ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection")
             ));
 
         services.AddIdentity<IdentityUser, IdentityRole>(options =>

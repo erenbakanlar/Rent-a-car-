@@ -34,4 +34,5 @@ public class HomeController : Controller
     }
 
     public IActionResult About() => View();
+    public IActionResult Branches() => View();
 }
